@@ -1,0 +1,110 @@
+/*------------------------------------------------------
+General Styles
+------------------------------------------------------*/
+html{
+    font-size: 62.5%;
+}
+body{
+    font-size: $baseFontSize;
+    font-family:$baseFontFamily;
+    line-height: $baseLineHeight;
+    color: $baseFontColor;
+}
+h1, .h1{
+    font-size: 4rem;
+}
+h2, .h2{
+    font-size: 3.6rem;
+}
+h3, .h3{
+    font-size: 3rem;
+}
+h4, .h4{
+    font-size: 2.4rem;
+}
+h5, .h5{
+    font-size: 1.8rem;
+}
+h6, .h6{
+    font-size: 1.4rem;
+}
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
+    font-weight: 500;
+    line-height: 1.125;
+}
+a{
+    color: $primaryColor;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    &:focus, &:visited{
+        outline: none;
+        text-decoration: none;
+        color: $primaryColor;
+    }
+    &:hover{
+        color: $primaryHover;
+        text-decoration: none;
+    }
+    .text-white &, .theme-bg &{
+        color: #ffffff;
+    }
+}
+.text-white{
+    color: #ffffff;
+}
+.section{
+    float: left;
+    width: 100%;
+    clear: both;
+    position: relative;
+}
+.section-padding{
+    padding: 115px 0;
+    &.top-padding-normal{
+        padding-top: 0;
+    }
+    &.bottom-padding-normal{
+        padding-bottom: 0;
+    }
+}
+.section-header{
+    margin-bottom: 30px;
+}
+.section-title{
+    margin: 0;
+}
+.page-header{
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    background-image: url(../../images/bg/page-header.png);
+    background-position: center center;
+    background-size: cover;
+    .page-header-overlay{
+        background-image: linear-gradient(to bottom, transparent 0%, #000000 100%);
+        color: #ffffff;
+        padding: 215px 0 40px;
+    }
+    .page-title{
+        margin: 0;
+        font-size: 4rem;
+        font-weight: 400;
+    }
+}
+
+/*** Form and control ***/
+form{
+    position: relative;
+}
+input:not([type=radio]):not([type=checkbox]):not([type=submit]), textarea{
+    width: 100%;
+}
+input, select, textarea, button{
+    &:focus{
+        outline: none;
+    }
+}
+textarea{
+    resize: none;
+}

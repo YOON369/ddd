@@ -1,0 +1,84 @@
+/*------------------------------------------------------
+Celebrity Page Styles
+------------------------------------------------------*/
+.celebrity-list{
+    float: left;
+    width: 100%;
+    .pagination{
+        margin-top: 0;
+    }
+}
+.celebrity-item{
+    float: left;
+    width: 100%;
+    position: relative;
+    margin-bottom: 50px;
+    .thumb-hover{
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: "";
+        background-image: linear-gradient(to bottom, rgba($primaryColor, 0.9) 0%, rgba($secondaryColor, 0.9) 100%);
+        visibility: hidden;
+        opacity: 0;
+        transform: scale(0);
+        transition: all 0.3s ease;
+        .celebrity-link{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            height: 40px;
+            width: 40px;
+            transform: translate(-50%, -50%);
+            display: block;
+            &:before{
+                left: 0;
+                top: 50%;
+                margin-top: -2px;
+                width: 100%;
+                height: 4px;
+            }
+            &:after{
+                left: 50%;
+                margin-left: -2px;
+                top: 0;
+                height: 100%;
+                width: 4px;
+            }
+            &:before, &:after{
+                content: "";
+                position: absolute;
+                background-color: #ffffff;
+            }
+        }
+    }
+    .celebrity-details {
+        margin-top: 20px;
+        .celebrity-name {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #111111;
+            a {
+                color: inherit;
+                &:hover {
+                    color: $primaryColor;
+                }
+            }
+        }
+        .celebrity-profession {
+            color: #808080;
+            margin-bottom: 0;
+            margin-top: 5px;
+        }
+    }
+    &:hover {
+        .thumb-hover{
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+    }
+}

@@ -1,0 +1,164 @@
+/*------------------------------------------------------
+Single Movie Styles
+------------------------------------------------------*/
+.page-header{
+    &.single-video-header{
+        background-image: url(../../images/bg/single-page-header.png);
+    }
+}
+.video-single{
+    float: left;
+    width: 100%;
+    .thumb-wrap{
+        position: relative;
+        .thumb-hover{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(#000000, 0.7);
+            .play-video{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+        + .content-wrap{
+            margin-top: 60px;
+        }
+    }
+    .content-wrap{
+        float: left;
+        width: 100%;
+        .video-thumb {
+            width: 270px;
+            float: left;
+            +.video-details {
+                margin-left: 30px;
+                width: calc(100% - 300px);
+            }
+        }
+        .video-details {
+            float: left;
+            .video-title {
+                font-size: 3rem;
+                margin: 0;
+                color: #111111;
+                a {
+                    color: inherit;
+                    &:hover {
+                        color: $primaryColor;
+                    }
+                }
+            }
+            .video-release-date{
+                font-size: 1.6rem;
+                margin-top: 5px;
+                margin-bottom: 0;
+            }
+            .ratings-wrap{
+                float: left;
+                clear: both;
+                width: 100%;
+                margin: 25px 0;
+            }
+            .rating{
+                width: 53px;
+                height: 50px;
+                background-image: url(../../images/icons/bstar.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                display: inline-block;
+                text-align: center;
+                line-height: 53px;
+                position: static;
+                color: #111111;
+                font-size: 1.4rem;
+                float: left;
+                margin-right: 15px;
+            }
+            .expanded-rating{
+                float: left;
+                width: calc(100% - 68px);
+            }
+            .star-rating{
+                display: block;
+                float: left;
+                .star{
+                    display: inline-block;
+                    float: left;
+                    margin-right: 3px;
+                    position: relative;
+                    &:before{
+                        content: "\f005";
+                        font-family: "FontAwesome";
+                        font-size: 1.6rem;
+                        color: #808080;
+                    }
+                    &.on{
+                        &:before{
+                            color: #ffc000;
+                        }
+                    }
+                }
+            }
+            .user-voted{
+                color: #808080;
+                display: block;
+                clear: left;
+                i{
+                    color: $primaryColor;
+                    font-size: 1.6rem;
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}
+.single-section{
+    float: left;
+    width: 100%;
+    & + &{
+        margin-top: 60px;
+    }
+    .single-section-title{
+        font-size: 3rem;
+        color: #111111;
+        margin-top: 0;
+        margin-bottom: 25px;
+    }
+    .section-content{
+        p{
+            margin-bottom: 35px;
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+.single-gallery-slider{
+    .owl-prev, .owl-next{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2.4rem;
+        color: #ffffff;
+        background-color: rgba(#000000, 0.5);
+        height: 40px;
+        width: 40px;
+        text-align: center;
+        line-height: 40px;
+        transition: all 0.3s ease;
+        &:hover{
+            color: $primaryColor;
+        }
+    }
+    .owl-prev{
+        left: 0;
+    }
+    .owl-next{
+        right: 0;
+    }
+}

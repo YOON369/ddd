@@ -1,0 +1,196 @@
+/*------------------------------------------------------
+Movies Page Styles
+------------------------------------------------------*/
+
+.video-list {
+    float: left;
+    width: 100%;
+    .video-item {
+        display: flex;
+        align-items: center;
+        float: left;
+        width: 100%;
+        padding-bottom: 50px;
+        border-bottom: 1px solid #e6e6e6;
+        + .video-item{
+            margin-top: 50px;
+        }
+        .video-thumb {
+            width: 270px;
+            float: left;
+            +.video-details {
+                margin-left: 30px;
+                width: calc(100% - 500px);
+            }
+        }
+        .video-details {
+            float: left;
+            .video-title {
+                font-size: 3rem;
+                margin: 0;
+                color: #111111;
+                a {
+                    color: inherit;
+                    &:hover {
+                        color: $primaryColor;
+                    }
+                }
+            }
+            .video-release-date{
+                font-size: 1.6rem;
+                margin-top: 5px;
+                margin-bottom: 0;
+            }
+            .ratings-wrap{
+                float: left;
+                clear: both;
+                width: 100%;
+                margin: 25px 0;
+            }
+            .rating{
+                width: 53px;
+                height: 50px;
+                background-image: url(../../images/icons/bstar.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                display: inline-block;
+                text-align: center;
+                line-height: 53px;
+                position: static;
+                color: #111111;
+                font-size: 1.4rem;
+                float: left;
+                margin-right: 15px;
+            }
+            .expanded-rating{
+                float: left;
+                width: calc(100% - 68px);
+            }
+            .star-rating{
+                display: block;
+                float: left;
+                .star{
+                    display: inline-block;
+                    float: left;
+                    margin-right: 3px;
+                    position: relative;
+                    &:before{
+                        content: "\f005";
+                        font-family: "FontAwesome";
+                        font-size: 1.6rem;
+                        color: #808080;
+                    }
+                    &.on{
+                        &:before{
+                            color: #ffc000;
+                        }
+                    }
+                }
+            }
+            .user-voted{
+                color: #808080;
+                display: block;
+                clear: left;
+                i{
+                    color: $primaryColor;
+                    font-size: 1.6rem;
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+    .watch-now-wrap {
+        width: 200px;
+        text-align: right;
+    }
+    .btn-watch-now {
+        width: 170px;
+        height: 45px;
+        line-height: 41px;
+        background-color: $primaryColor;
+        border: 2px solid $primaryColor;
+        border-radius: 22px;
+        color: #ffffff;
+        display: inline-block;
+        font-weight: 500;
+        font-size: 1.8rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        &:hover {
+            color: $primaryColor;
+            background-color: transparent;
+        }
+    }
+}
+.video-attributes{
+    float: left;
+    width: 100%;
+    clear: both;
+    p{
+        font-size: 1.5rem;
+        label{
+            margin: 0;
+        }
+        
+    }
+}
+.share-on{
+    float: left;
+    clear: both;
+    width: 100%;
+    label{
+        margin: 0;
+    }
+    .share-social{
+        display: inline-block;
+        a{
+            margin: 0 8px;
+            display: inline-block;
+            .fa-facebook{
+                color: #3b5999;
+            }
+            .fa-twitter{
+                color: #55acee;
+            }
+            .fa-google-plus{
+                color: #dd4b39;
+            }
+            .fa-pinterest{
+                color: #bd081c;
+            }
+        }
+    }
+}
+.pagination{
+    margin-top: 60px;
+    margin-bottom: 0;
+}
+.nav-links{
+    .current-page, .page-numbers{
+        font-weight: 500;
+        color: #111111;
+        border: 2px solid #dadada;
+        display: inline-block;
+        height: 40px;
+        line-height: 38px;
+        transition: all 0.3s ease;
+    }
+    .current-page{
+        padding: 0 12px;
+    }
+    .page-numbers{
+        width: 40px;
+        text-align: center;
+        &.prev, &.next{
+            font-size: 1.8rem;
+            line-height: 36px;
+        }
+        &:hover{
+            color: $primaryColor;
+        }
+        &.current{
+            color: $primaryColor;
+            border-color: $primaryColor;
+        }
+    }
+}

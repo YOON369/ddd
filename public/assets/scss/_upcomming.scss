@@ -1,0 +1,93 @@
+/*------------------------------------------------------
+Upcomming Styles
+------------------------------------------------------*/
+.upcomming-section{
+    background-image: url(../../images/bg/pattern.png);
+    background-position: top left;
+    background-repeat: repeat;
+}
+.upcomming-featured{
+    position: relative;
+    .play-video{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .upcomming-details{
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
+        padding: 146px 50px 0 50px;
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        .video-title{
+            margin: 0;
+        }
+        .video-release-on{
+            font-size: 1.6rem;
+            margin: 10px 0 20px 0;
+        }
+    }
+}
+.upcomming-item{
+    position: relative;
+    float: left;
+    width: 100%;
+    & + &{
+        margin-top: 30px;
+    }
+    .upcomming-hover{
+        background-image: linear-gradient(to bottom, rgba($primaryColor, 0.9) 0%, rgba($secondaryColor, 0.9) 100%);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        transform: scale(0);
+        transition: all 0.3s ease;
+        .play-video{
+            background-color: #ffffff;
+            font-size: 1.4rem;
+            height: 44px;
+            width: 44px;
+            line-height: 44px;
+            box-shadow: 0 0 0 8px rgba(#ffffff, 0.2);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            &:hover{
+                box-shadow: 0 0 0 8px #ffffff;
+            }
+            i{
+                color: $primaryColor;
+                margin-left: 3px;
+            }
+        }
+        
+    }
+    .upcomming-details{
+        position: absolute;
+        padding: 25px 15px 5px;
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        .video-title{
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: 500;
+        }
+        .video-release-on{
+            font-size: 1.2rem;
+            margin: 0;
+        }
+    }
+    &:hover{
+        .upcomming-hover{
+            transform: scale(1);
+        }
+    }
+}

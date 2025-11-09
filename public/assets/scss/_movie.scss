@@ -1,0 +1,141 @@
+/*------------------------------------------------------
+Movie Section Styles
+------------------------------------------------------*/
+
+.video-carousel {
+    .owl-item {
+        padding: 0 15px;
+    }
+    .owl-buttons {
+        position: absolute;
+        top: -70px;
+        right: 15px;
+    }
+    .owl-prev,
+    .owl-next {
+        font-size: 2.4rem;
+        color: $baseFontColor;
+        border: 2px solid #e7e7e7;
+        display: inline-block;
+        float: left;
+        height: 35px;
+        width: 35px;
+        line-height: 33px;
+        border-radius: 50%;
+        text-align: center;
+        margin-left: 10px;
+        transition: all 0.3s ease;
+        &:hover{
+            color: #ffffff;
+            background-color: $primaryColor;
+            border-color: $primaryColor;
+        }
+    }
+}
+
+.video-item {
+    float: left;
+    width: 100%;
+    position: relative;
+    .rating {
+        display: block;
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        width: 38px;
+        height: 36px;
+        background-image: url(../../images/icons/mstar.png);
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        z-index: 3;
+        font-size: 1.2rem;
+        color: #ffffff;
+        text-align: center;
+        line-height: 40px;
+    }
+    .thumb-hover {
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: "";
+        background-image: linear-gradient(to bottom, rgba($primaryColor, 0.9) 0%, rgba($secondaryColor, 0.9) 100%);
+        visibility: hidden;
+        opacity: 0;
+        transform: scale(0);
+        transition: all 0.3s ease;
+        .play-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-color: #ffffff;
+            height: 44px;
+            width: 44px;
+            line-height: 44px;
+            font-size: 1.4rem;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 8px rgba(#ffffff, 0.2);
+            &:hover{
+                box-shadow: 0 0 0 8px #ffffff;
+            }
+            i {
+                color: $primaryColor;
+                margin-left: 3px;
+            }
+        }
+    }
+    .video-details {
+        margin-top: 20px;
+        .video-title {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #111111;
+            a {
+                color: inherit;
+                &:hover {
+                    color: $primaryColor;
+                }
+            }
+        }
+        .video-release-on {
+            color: #808080;
+            margin-bottom: 0;
+            margin-top: 5px;
+        }
+    }
+    &:hover {
+        .thumb-hover {
+            visibility: visible;
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+}
+
+.thumb-wrap {
+    width: 100%;
+    clear: both;
+    position: relative;
+    display: block;
+    img {
+        max-width: 100%;
+    }
+}
+
+.all-link {
+    display: inline-block;
+    float: right;
+    line-height: 35px;
+    color: #111111;
+    font-size: 1.5rem;
+    margin-right: 100px;
+    &:focus, &:visited{
+        color: #111111;
+    }
+    &:hover{
+        color: $primaryColor;
+    }
+}

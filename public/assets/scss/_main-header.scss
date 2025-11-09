@@ -1,0 +1,147 @@
+/*------------------------------------------------------
+Main Header Styles
+------------------------------------------------------*/
+.navbar-default{
+    min-height: 150px;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    .navbar-brand{
+        height: 52px;
+        padding: 0 15px;
+        margin-top: 49px;
+        margin-bottom: 49px;
+    }
+    .navbar-form{
+        margin-top: 55px;
+        margin-bottom: 55px;
+        margin-left: 55px;
+        float: left;
+        padding: 0;
+        width: 400px;
+        select{
+            color: #505050;
+            background-color: transparent;
+            border: none;
+            line-height: 39px;
+            height: 39px;
+            float: left;
+            width: 110px;
+            padding: 0 15px;
+            border-top-left-radius: 19.5px;
+            border-bottom-left-radius: 19.5px;
+            border: 1px solid #d8d8d8;
+            transition: all 0.3s ease;
+            &:hover, &:focus{
+                border-color: $primaryColor;
+            }
+        }
+        [type=search]{
+            float: left;
+            width: calc(100% - 160px) !important;
+            border: none;
+            background-color: transparent;
+            height: 39px;
+            line-height: 39px;
+            padding: 0 15px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #d8d8d8 transparent #d8d8d8 transparent;
+            transition: all 0.3s ease;
+            &:focus{
+                border-color: $primaryColor;
+            }
+        }
+        [type=submit]{
+            float: left;
+            width: 50px;
+            text-align: center;
+            border-top-right-radius: 19.5px;
+            border-bottom-right-radius: 19.5px;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            line-height: 39px;
+            height: 39px;
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            border: 1px solid #d8d8d8;
+            transition: all 0.3s ease;
+            color: #999999;
+            &:hover, &:focus{
+                border-color: $primaryColor;
+                color: $primaryColor;
+            }
+        }
+    }
+    .navbar-nav{
+        margin-top: 50px;
+        margin-bottom: 50px;
+        >li{
+            >a{
+                color: $baseFontColor;
+                font-size: 1.5rem;
+                &:focus, &:visited{
+                    color: $baseFontColor;
+                }
+                &:hover{
+                    color: $primaryColor;
+                }
+            }
+            &:last-child{
+                >a{
+                    padding-right: 0;
+                }
+            }
+            &.active{
+                >a{
+                    color: $primaryColor;
+                    background-color: transparent;
+                    &:hover, &:focus, &:visited{
+                        color: $primaryColor;
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+        li{
+            >a{
+                color: $baseFontColor;
+                font-size: 1.5rem;
+                &:focus, &:visited{
+                    color: $baseFontColor;
+                }
+                &:hover{
+                    color: $primaryColor;
+                }
+            }
+            &.dropdown{
+                >a{
+                    position: relative;
+                    &:after{
+                        content: "\f107";
+                        font-family: "FontAwesome";
+                        margin-left: 4px;
+                    }
+                }
+                >.dropdown-menu{
+                    display: block;
+                    border: none;
+                    visibility: hidden;
+                    opacity: 0;
+                    transform: rotateX(90deg);
+                    transition: all 0.3s ease;
+                    transform-origin: top;
+                }
+                &:hover{
+                    >.dropdown-menu{
+                        opacity: 1;
+                        visibility: visible;
+                        transform: rotateX(0);
+                    }
+                }
+            }
+        }
+    }
+}
+

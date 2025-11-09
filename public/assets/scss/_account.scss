@@ -1,0 +1,104 @@
+/*------------------------------------------------------
+Login Page Styles
+------------------------------------------------------*/
+
+.account-page {
+    background-color: #272e30;
+}
+
+.account-wrap {
+    max-width: 430px;
+    width: 100%;
+    margin: 120px auto;
+    text-align: center;
+}
+
+.site-logo {
+    display: inline-block;
+    margin-bottom: 40px;
+}
+
+.accountform {
+    background-color: #ffffff;
+    border-radius: 10px;
+    text-align: left;
+    padding: 45px 30px;
+    h3 {
+        font-size: 2.4rem;
+        font-weight: 500;
+        color: #808080;
+        margin-top: 0;
+        margin-bottom: 35px;
+    }
+    label {
+        font-size: 1.4rem;
+        font-weight: 400;
+    }
+    .basic-field {
+        label {
+            display: block;
+            width: 100%;
+            color: #111111;
+            +label {
+                margin-top: 22px;
+            }
+            p {
+                margin-top: 7px;
+                margin-bottom: 0;
+            }
+        }
+        .row {
+            margin: 25px -10px 0;
+            .col-sm-6 {
+                padding: 0 10px;
+            }
+        }
+    }
+    [type=text],
+    [type=password],
+    [type=email] {
+        width: 100%;
+        border: 1px solid #d1d1d1;
+        line-height: 30px;
+        padding: 9px 15px;
+    }
+    .stay-login {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 0;
+        [type=checkbox] {
+            width: 15px;
+            height: 15px;
+            margin-top: 0;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+    }
+    [type=submit] {
+        font-weight: 400;
+        font-size: 1.8rem;
+        background-color: $primaryColor;
+        line-height: 50px;
+        border: none;
+        height: 50px;
+        color: #ffffff;
+        text-align: center;
+        width: 100%;
+        text-transform: uppercase;
+        margin-top: 28px;
+        transition: all 0.3s ease;
+        &:hover {
+            background-color: #111111;
+        }
+    }
+    .signup-recover {
+        text-align: center;
+        margin-top: 28px;
+        margin-bottom: 0;
+    }
+}
+
+
+/*------------------------------------------------------
+Signup Page Styles
+------------------------------------------------------*/

@@ -1,0 +1,13 @@
+/*------------------------------------------------------
+TV Show Page Styles
+------------------------------------------------------*/
+.show-listing{
+    float: left;
+    width: 100%;
+    .video-item{
+        margin-bottom: 50px;
+    }
+    .pagination{
+        margin-top: 0;
+    }
+}

@@ -1,0 +1,206 @@
+/*------------------------------------------------------
+Footer Styles
+------------------------------------------------------*/
+
+footer {
+    background-color: #0f1619;
+    float: left;
+    width: 100%;
+}
+
+.footer-widget-area {
+    float: left;
+    width: 100%;
+    clear: both;
+    padding: 85px 0 60px;
+}
+
+.footer-logo {
+    display: block;
+    +.about-text {
+        margin-top: 40px;
+        color: #b4b4b4;
+    }
+}
+
+.footer-social {
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+    .footer-social-title {
+        margin: 0 0 20px 0;
+    }
+}
+
+.socials {
+    float: left;
+    width: 100%;
+    a {
+        display: inline-block;
+        font-size: 1.5rem;
+        color: #ffffff;
+        height: 35px;
+        width: 35px;
+        line-height: 35px;
+        border-radius: 50%;
+        text-align: center;
+        background-color: rgba(#ffffff, 0.05);
+        float: left;
+        +a {
+            margin-left: 15px;
+        }
+        &:hover {
+            background-color: $primaryColor;
+        }
+    }
+}
+
+.widget {
+    float: left;
+    width: 100%;
+    & + &{
+        margin-top: 35px;
+    }
+    .widget-title {
+        font-size: 2.2rem;
+        margin-top: 0;
+        margin-bottom: 35px;
+    }
+    .widget-inner {
+        float: left;
+        width: 100%;
+    }
+    .widget-cat {
+        float: left;
+        width: 100%;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        .cat {
+            display: block;
+            float: left;
+            width: 50%;
+            a {
+                font-weight: 500;
+                line-height: 2.57;
+                color: #ffffff;
+                &:hover {
+                    color: #eb1436;
+                }
+            }
+        }
+    }
+    &.about-widget{
+        margin-top: -15px;
+    }
+    &.newsletter-widget {
+        p {
+            margin-bottom: 25px;
+        }
+        .subscription {
+            float: left;
+            width: 100%;
+            clear: both;
+            [type=email] {
+                border: 2px solid rgba(#ffffff, 0.15);
+                line-height: 41px;
+                height: 45px;
+                padding: 0 15px;
+                background-color: transparent;
+                float: left;
+                width: calc(100% - 70px);
+                margin-right: 10px;
+            }
+            [type=submit]{
+                width: 60px;
+                line-height: 41px;
+                height: 45px;
+                border: 2px solid rgba(#ffffff, 0.15);
+                color: $primaryColor;
+                font-size: 1.8rem;
+                background-color: transparent;
+            }
+             ::-webkit-input-placeholder {
+                color: #b4b4b4;
+                 opacity: 1;
+            }
+            ::-moz-placeholder {
+                color: #b4b4b4;
+                 opacity: 1;
+            }
+            :-ms-input-placeholder {
+                color: #b4b4b4;
+                 opacity: 1;
+            }
+            :-moz-placeholder {
+                color: #b4b4b4;
+                 opacity: 1;
+            }
+        }
+    }
+    &.app-widget{
+        .widget-title{
+            margin-bottom: 20px;
+        }
+        .google-play-download{
+            margin-right: 20px;
+        }
+        .google-play-download, .apple-store-download{
+            display: inline-block;
+            float: left;
+        }
+    }
+}
+.copyright-footer{
+    float: left;
+    width: 100%;
+    clear: both;
+    .container{
+        border-top: 1px solid rgba(#ffffff, 0.1);
+        padding-top: 28px;
+        padding-bottom: 28px;
+    }
+    .footer-nav{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        li{
+            display: inline-block;
+            a{
+                display: block;
+                color: #b4b4b4;
+                &:hover{
+                    color: $primaryColor;
+                }
+            }
+            + li{
+                a{
+                    margin-left: 20px;
+                }
+            }
+        }
+    }
+    .copyright-text{
+        margin: 0;
+        text-align: right;
+        color: #b4b4b4;
+        a{
+            color: inherit;
+            &:hover{
+                color: $primaryColor;
+            }
+        }
+    }
+}
+.newsletter-success, .newsletter-error {
+    display: none;
+    margin-top: 12px;
+    margin-bottom: 0 !important;
+    padding: 3px 10px;
+}
+.newsletter-success{
+    border: 1px solid #16a085;
+}
+.newsletter-error{
+    border: 1px solid $primaryColor;
+}

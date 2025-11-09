@@ -1,0 +1,103 @@
+/*------------------------------------------------------
+Single Celebrity Page Styles
+------------------------------------------------------*/
+
+.page-header {
+    &.single-celebrity-header {
+        background-image: url(../../images/bg/single-celebrity-header.png);
+    }
+}
+
+.celebrity-single {
+    float: left;
+    width: 100%;
+    .content-wrap {
+        float: left;
+        width: 100%;
+        .celebrity-thumb {
+            width: 270px;
+            float: left;
+            +.celebrity-details {
+                margin-left: 30px;
+                width: calc(100% - 300px);
+            }
+        }
+        .celebrity-details {
+            float: left;
+            .celebrity-name {
+                font-size: 3rem;
+                margin: 0;
+                color: #111111;
+                a {
+                    color: inherit;
+                    &:hover {
+                        color: $primaryColor;
+                    }
+                }
+            }
+            .celebrity-profession {
+                font-size: 1.6rem;
+                margin-top: 5px;
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.celebrity-infos {
+    margin-top: 25px;
+    p {
+        font-size: 1.5rem;
+        line-height: 2.1rem;
+        label {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.filmography-table {
+    width: 100%;
+    tr {
+        border-bottom: 1px solid #e6e6e6;
+        &.head-tr {
+            font-size: 1.8rem;
+            color: #111111;
+            line-height: 100%;
+            font-weight: 400;
+            th {
+                font-weight: inherit;
+            }
+        }
+    }
+    th,
+    td {
+        padding-bottom: 20px;
+        &:last-child {
+            text-align: right;
+        }
+    }
+    td {
+        padding-top: 20px;
+    }
+    .film-poster {
+        width: 125px;
+        padding-right: 25px;
+    }
+    .film-details {
+        .film-title {
+            font-size: 1.8rem;
+            color: #111111;
+            margin: 0;
+            a{
+                color: inherit;
+                &:hover{
+                    color: $primaryColor;
+                }
+            }
+            .film-category{
+                margin-bottom: 0;
+                margin-top: 3px;
+            }
+        }
+    }
+}

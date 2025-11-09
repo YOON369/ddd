@@ -1,0 +1,33 @@
+/*------------------------------------------------------
+Topbar Styles
+------------------------------------------------------*/
+
+.topbar {
+    background-color: $primaryColor;
+    padding: 9px 0;
+}
+
+.topbar-intro {
+    font-size: 1.5rem;
+    margin: 3px 0 0;
+}
+
+.topbar-right-btns {
+    text-align: right;
+    .btn {
+        color: #ffffff;
+        font-weight: 600;
+        padding: 3px 15px;
+        border-radius: 15px;
+        font-size: 1.4rem;
+        line-height: 1.42857143;
+        &:focus,
+        &:visited {
+            outline: none;
+        }
+        &:hover {
+            color: #111111;
+            background-color: #ffffff;
+        }
+    }
+}
