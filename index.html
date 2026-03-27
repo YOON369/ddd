@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suno Prompt Generator - YouTube to Suno AI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .input-section input {
+            flex: 1;
+            padding: 14px 18px;
+            background: #16161e;
+            border: 1px solid #2a2a3a;
+            border-radius: 12px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-section input:focus {
+            border-color: #8b5cf6;
+        }
+
+        .input-section input::placeholder {
+            color: #555;
+        }
+
+        .btn-primary {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.1s;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-primary:active { transform: scale(0.97); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .video-preview {
+            display: none;
+            background: #16161e;
+            border: 1px solid #2a2a3a;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .video-preview .video-embed {
+            width: 100%;
+            aspect-ratio: 16/9;
+        }
+
+        .video-preview .video-embed iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .video-info .video-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #ccc;
+            flex: 1;
+        }
+
+        .video-info .video-channel {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        .params-section {
+            display: none;
+            background: #16161e;
+            border: 1px solid #2a2a3a;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+
+        .params-section h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #8b5cf6;
+            margin-bottom: 20px;
+        }
+
+        .param-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .param-grid { grid-template-columns: 1fr; }
+            header h1 { font-size: 1.6rem; }
+            .input-section { flex-direction: column; }
+        }
+
+        .param-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .param-group select,
+        .param-group input[type="text"] {
+            width: 100%;
+            padding: 10px 14px;
+            background: #0f0f17;
+            border: 1px solid #2a2a3a;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .param-group select:focus,
+        .param-group input[type="text"]:focus {
+            border-color: #8b5cf6;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+            grid-column: 1 / -1;
+        }
+
+        .tag {
+            padding: 6px 14px;
+            background: #1e1e2e;
+            border: 1px solid #2a2a3a;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .tag:hover { border-color: #8b5cf6; color: #ccc; }
+        .tag.active { background: #8b5cf620; border-color: #8b5cf6; color: #8b5cf6; }
+
+        .generate-section {
+            display: none;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .btn-generate {
+            padding: 16px 48px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.1s;
+        }
+
+        .btn-generate:hover { opacity: 0.9; }
+        .btn-generate:active { transform: scale(0.97); }
+
+        .result-section {
+            display: none;
+            background: #16161e;
+            border: 1px solid #2a2a3a;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .result-section h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ec4899;
+            margin-bottom: 16px;
+        }
+
+        .prompt-card {
+            background: #0f0f17;
+            border: 1px solid #2a2a3a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .prompt-card .prompt-label {
+            font-size: 0.75rem;
+            color: #8b5cf6;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .prompt-card .prompt-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #ddd;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .btn-copy {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 14px;
+            background: #2a2a3a;
+            border: none;
+            border-radius: 6px;
+            color: #aaa;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-copy:hover { background: #3a3a4a; color: #ddd; }
+        .btn-copy.copied { background: #22c55e20; color: #22c55e; }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #2a2a3a;
+            border-top-color: #8b5cf6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading p { color: #888; font-size: 0.9rem; }
+
+        .error-msg {
+            display: none;
+            background: #dc262620;
+            border: 1px solid #dc262640;
+            border-radius: 12px;
+            padding: 14px 20px;
+            color: #f87171;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #444;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <div class="container">
+        <header>
+            <h1>Suno Prompt Generator</h1>
+            <p>YouTube URL을 넣으면 Suno AI 음악 프롬프트를 생성합니다</p>
+        </header>
+
+        <div class="input-section">
+            <input type="text" id="urlInput" placeholder="YouTube URL을 붙여넣으세요 (예: https://www.youtube.com/watch?v=...)" />
+            <button class="btn-primary" id="loadBtn" onclick="loadVideo()">분석</button>
+        </div>
+
+        <div class="error-msg" id="errorMsg"></div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>영상 정보를 불러오는 중...</p>
+        </div>
+
+        <div class="video-preview" id="videoPreview">
+            <div class="video-embed" id="videoEmbed"></div>
+            <div class="video-info">
+                <div>
+                    <div class="video-title" id="videoTitle"></div>
+                    <div class="video-channel" id="videoChannel"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="params-section" id="paramsSection">
+            <h2>음악 스타일 설정</h2>
+            <div class="param-grid">
+                <div class="param-group">
+                    <label>장르 (Genre)</label>
+                    <select id="paramGenre">
+                        <option value="">자동 감지</option>
+                        <option value="K-Pop">K-Pop</option>
+                        <option value="Pop">Pop</option>
+                        <option value="Hip-Hop">Hip-Hop / Rap</option>
+                        <option value="R&B">R&B / Soul</option>
+                        <option value="Rock">Rock</option>
+                        <option value="Ballad">Ballad</option>
+                        <option value="EDM">EDM / Electronic</option>
+                        <option value="Jazz">Jazz</option>
+                        <option value="Classical">Classical</option>
+                        <option value="Lo-fi">Lo-fi</option>
+                        <option value="Indie">Indie</option>
+                        <option value="Folk">Folk / Acoustic</option>
+                        <option value="Metal">Metal</option>
+                        <option value="Reggae">Reggae</option>
+                        <option value="Country">Country</option>
+                        <option value="Latin">Latin</option>
+                        <option value="Trot">Trot (트로트)</option>
+                    </select>
+                </div>
+                <div class="param-group">
+                    <label>분위기 (Mood)</label>
+                    <select id="paramMood">
+                        <option value="">자동 감지</option>
+                        <option value="Energetic">에너제틱 / 신나는</option>
+                        <option value="Melancholic">우울한 / 감성적</option>
+                        <option value="Upbeat">밝은 / 경쾌한</option>
+                        <option value="Dark">어두운 / 무거운</option>
+                        <option value="Romantic">로맨틱 / 감미로운</option>
+                        <option value="Chill">차분한 / 릴랙스</option>
+                        <option value="Epic">웅장한 / 장엄한</option>
+                        <option value="Dreamy">몽환적 / 신비로운</option>
+                        <option value="Aggressive">강렬한 / 공격적</option>
+                        <option value="Nostalgic">향수적 / 그리운</option>
+                        <option value="Playful">장난스러운 / 귀여운</option>
+                    </select>
+                </div>
+                <div class="param-group">
+                    <label>보컬 (Vocal)</label>
+                    <select id="paramVocal">
+                        <option value="">자동 감지</option>
+                        <option value="Female Vocal">여성 보컬</option>
+                        <option value="Male Vocal">남성 보컬</option>
+                        <option value="Duet">듀엣</option>
+                        <option value="Choir">합창</option>
+                        <option value="Rap">랩</option>
+                        <option value="Whisper">위스퍼</option>
+                        <option value="Instrumental">인스트루멘탈 (무보컬)</option>
+                    </select>
+                </div>
+                <div class="param-group">
+                    <label>템포 (Tempo)</label>
+                    <select id="paramTempo">
+                        <option value="">자동 감지</option>
+                        <option value="Slow (60-80 BPM)">느린 (60-80 BPM)</option>
+                        <option value="Medium (80-110 BPM)">보통 (80-110 BPM)</option>
+                        <option value="Fast (110-140 BPM)">빠른 (110-140 BPM)</option>
+                        <option value="Very Fast (140+ BPM)">매우 빠른 (140+ BPM)</option>
+                    </select>
+                </div>
+                <div class="param-group">
+                    <label>악기 (Instruments)</label>
+                    <input type="text" id="paramInstruments" placeholder="예: Piano, Guitar, Synth, Drums" />
+                </div>
+                <div class="param-group">
+                    <label>언어 (Language)</label>
+                    <select id="paramLanguage">
+                        <option value="">자동 감지</option>
+                        <option value="Korean">한국어</option>
+                        <option value="English">영어</option>
+                        <option value="Japanese">일본어</option>
+                        <option value="Chinese">중국어</option>
+                        <option value="Spanish">스페인어</option>
+                    </select>
+                </div>
+                <div class="tag-container" id="tagContainer">
+                    <span class="tag" data-value="catchy hook">Catchy Hook</span>
+                    <span class="tag" data-value="strong bass">Strong Bass</span>
+                    <span class="tag" data-value="atmospheric">Atmospheric</span>
+                    <span class="tag" data-value="groovy">Groovy</span>
+                    <span class="tag" data-value="acoustic">Acoustic</span>
+                    <span class="tag" data-value="orchestral">Orchestral</span>
+                    <span class="tag" data-value="lo-fi beats">Lo-fi Beats</span>
+                    <span class="tag" data-value="synth-heavy">Synth Heavy</span>
+                    <span class="tag" data-value="retro">Retro / Vintage</span>
+                    <span class="tag" data-value="minimalist">Minimalist</span>
+                    <span class="tag" data-value="powerful vocals">Powerful Vocals</span>
+                    <span class="tag" data-value="cinematic">Cinematic</span>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 24px;">
+                <button class="btn-generate" onclick="generatePrompt()">프롬프트 생성하기</button>
+            </div>
+        </div>
+
+        <div class="result-section" id="resultSection">
+            <h2>생성된 Suno 프롬프트</h2>
+
+            <div class="prompt-card">
+                <div class="prompt-label">Style Prompt (스타일)</div>
+                <div class="prompt-text" id="stylePrompt"></div>
+                <button class="btn-copy" onclick="copyText('stylePrompt', this)">복사</button>
+            </div>
+
+            <div class="prompt-card">
+                <div class="prompt-label">Detailed Prompt (상세)</div>
+                <div class="prompt-text" id="detailedPrompt"></div>
+                <button class="btn-copy" onclick="copyText('detailedPrompt', this)">복사</button>
+            </div>
+
+            <div class="prompt-card">
+                <div class="prompt-label">Simple Prompt (간단)</div>
+                <div class="prompt-text" id="simplePrompt"></div>
+                <button class="btn-copy" onclick="copyText('simplePrompt', this)">복사</button>
+            </div>
+
+            <div class="prompt-card">
+                <div class="prompt-label">Negative Prompt (제외할 요소)</div>
+                <div class="prompt-text" id="negativePrompt"></div>
+                <button class="btn-copy" onclick="copyText('negativePrompt', this)">복사</button>
+            </div>
+        </div>
+
+        <footer>
+            Suno Prompt Generator &mdash; YouTube 음악을 Suno AI 프롬프트로 변환
+        </footer>
+    </div>
+
+    <script>
+        // Tag toggle
+        document.querySelectorAll('.tag').forEach(tag => {
+            tag.addEventListener('click', () => tag.classList.toggle('active'));
+        });
+
+        // Enter key support
+        document.getElementById('urlInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') loadVideo();
+        });
+
+        function extractVideoId(url) {
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+                /^([a-zA-Z0-9_-]{11})$/
+            ];
+            for (const p of patterns) {
+                const m = url.match(p);
+                if (m) return m[1];
+            }
+            return null;
+        }
+
+        function showError(msg) {
+            const el = document.getElementById('errorMsg');
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+
+        async function loadVideo() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) { showError('YouTube URL을 입력해주세요.'); return; }
+
+            const videoId = extractVideoId(url);
+            if (!videoId) { showError('유효한 YouTube URL이 아닙니다.'); return; }
+
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('videoPreview').style.display = 'none';
+            document.getElementById('paramsSection').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('loadBtn').disabled = true;
+
+            try {
+                const res = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
+                const data = await res.json();
+
+                if (data.error) throw new Error(data.error);
+
+                const title = data.title || '제목 없음';
+                const channel = data.author_name || '';
+
+                document.getElementById('videoEmbed').innerHTML =
+                    `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
+                document.getElementById('videoTitle').textContent = title;
+                document.getElementById('videoChannel').textContent = channel;
+
+                document.getElementById('videoPreview').style.display = 'block';
+                document.getElementById('paramsSection').style.display = 'block';
+
+                autoDetectFromTitle(title, channel);
+            } catch (err) {
+                showError('영상 정보를 불러오지 못했습니다. URL을 확인해주세요.');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('loadBtn').disabled = false;
+            }
+        }
+
+        function autoDetectFromTitle(title, channel) {
+            const t = (title + ' ' + channel).toLowerCase();
+
+            // Genre detection
+            const genreMap = {
+                'K-Pop': ['kpop', 'k-pop', 'bts', 'blackpink', 'twice', 'aespa', 'ive', 'newjeans', 'stray kids', 'nct', 'itzy', 'exo', 'red velvet', 'seventeen', 'txt', 'le sserafim', 'gidle', '(g)i-dle', 'ateez', 'enhypen'],
+                'Hip-Hop': ['hip hop', 'hiphop', 'rap', 'trap', 'drill', 'boom bap', 'freestyle', 'cypher'],
+                'R&B': ['r&b', 'rnb', 'soul', 'neo soul', 'r and b'],
+                'Rock': ['rock', 'punk', 'grunge', 'alternative'],
+                'Ballad': ['ballad', '발라드', 'slow song'],
+                'EDM': ['edm', 'electronic', 'house', 'techno', 'trance', 'dubstep', 'bass', 'remix', 'dj'],
+                'Jazz': ['jazz', 'swing', 'bossa nova'],
+                'Classical': ['classical', 'orchestra', 'symphony', 'piano sonata', 'concerto'],
+                'Lo-fi': ['lo-fi', 'lofi', 'lo fi', 'chill beats'],
+                'Indie': ['indie', 'alternative', '인디'],
+                'Folk': ['folk', 'acoustic', 'unplugged'],
+                'Metal': ['metal', 'heavy metal', 'death metal', 'metalcore'],
+                'Trot': ['trot', '트로트', '미스터트롯', '미스트롯'],
+                'Pop': ['pop', 'mainstream'],
+                'Latin': ['latin', 'reggaeton', 'salsa', 'bachata'],
+                'Country': ['country', 'nashville', 'bluegrass']
+            };
+
+            const genreSelect = document.getElementById('paramGenre');
+            for (const [genre, keywords] of Object.entries(genreMap)) {
+                if (keywords.some(k => t.includes(k))) {
+                    genreSelect.value = genre;
+                    break;
+                }
+            }
+
+            // Mood detection
+            const moodMap = {
+                'Energetic': ['energetic', 'hype', 'party', 'dance', '신나는', 'powerful', 'fire'],
+                'Melancholic': ['sad', 'melancholy', '슬픈', '이별', 'heartbreak', 'cry', 'tears'],
+                'Upbeat': ['happy', 'fun', 'bright', 'cheerful', '밝은', 'summer', 'sunny'],
+                'Dark': ['dark', 'horror', 'evil', '어두운', 'nightmare'],
+                'Romantic': ['love', 'romantic', '사랑', 'heart', 'valentine', 'crush'],
+                'Chill': ['chill', 'relax', 'calm', 'peaceful', 'ambient', 'sleep', 'study'],
+                'Epic': ['epic', 'cinematic', 'trailer', 'grand', 'battle'],
+                'Dreamy': ['dream', 'dreamy', 'ethereal', 'fairy', 'fantasy'],
+                'Nostalgic': ['nostalgia', 'retro', 'vintage', 'old school', '추억', '90s', '80s', '70s']
+            };
+
+            const moodSelect = document.getElementById('paramMood');
+            for (const [mood, keywords] of Object.entries(moodMap)) {
+                if (keywords.some(k => t.includes(k))) {
+                    moodSelect.value = mood;
+                    break;
+                }
+            }
+
+            // Language detection
+            const langSelect = document.getElementById('paramLanguage');
+            if (/[\uAC00-\uD7AF]/.test(title)) langSelect.value = 'Korean';
+            else if (/[\u3040-\u309F\u30A0-\u30FF]/.test(title)) langSelect.value = 'Japanese';
+            else if (/[\u4E00-\u9FFF]/.test(title)) langSelect.value = 'Chinese';
+            else langSelect.value = 'English';
+        }
+
+        function getActiveTags() {
+            return Array.from(document.querySelectorAll('.tag.active')).map(t => t.dataset.value);
+        }
+
+        function generatePrompt() {
+            const title = document.getElementById('videoTitle').textContent;
+            const channel = document.getElementById('videoChannel').textContent;
+            const genre = document.getElementById('paramGenre').value || guessGenre(title);
+            const mood = document.getElementById('paramMood').value || guessMood(title);
+            const vocal = document.getElementById('paramVocal').value || 'Vocal';
+            const tempo = document.getElementById('paramTempo').value || 'Medium (80-110 BPM)';
+            const instruments = document.getElementById('paramInstruments').value;
+            const language = document.getElementById('paramLanguage').value || 'Korean';
+            const tags = getActiveTags();
+
+            // Style Prompt
+            const styleParts = [genre, mood, vocal, tempo.split(' (')[0]];
+            if (tags.length > 0) styleParts.push(...tags);
+            document.getElementById('stylePrompt').textContent = styleParts.join(', ');
+
+            // Detailed Prompt
+            let detailed = `A ${mood.toLowerCase()} ${genre} track`;
+            if (vocal !== 'Instrumental') {
+                detailed += ` with ${vocal.toLowerCase()}`;
+            } else {
+                detailed += `, instrumental`;
+            }
+            detailed += ` at ${tempo.toLowerCase()} tempo`;
+            if (instruments) {
+                detailed += `. Featuring ${instruments}`;
+            }
+            if (language) {
+                detailed += `. Lyrics in ${language}`;
+            }
+            if (tags.length > 0) {
+                detailed += `. ${tags.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(', ')}`;
+            }
+            detailed += `.`;
+            detailed += `\n\nInspired by: "${title}" by ${channel}`;
+            document.getElementById('detailedPrompt').textContent = detailed;
+
+            // Simple Prompt
+            const simple = `${genre}, ${mood.toLowerCase()}, ${vocal.toLowerCase()}, ${language} lyrics`;
+            document.getElementById('simplePrompt').textContent = simple;
+
+            // Negative Prompt
+            const negatives = generateNegatives(genre, mood, vocal);
+            document.getElementById('negativePrompt').textContent = negatives;
+
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function guessGenre(title) {
+            if (/[\uAC00-\uD7AF]/.test(title)) return 'K-Pop';
+            return 'Pop';
+        }
+
+        function guessMood(title) {
+            return 'Energetic';
+        }
+
+        function generateNegatives(genre, mood, vocal) {
+            const negMap = {
+                'K-Pop': 'country, folk, heavy metal, classical, opera',
+                'Hip-Hop': 'classical, opera, folk, country, orchestral',
+                'R&B': 'metal, punk, noise, harsh, aggressive',
+                'Rock': 'lo-fi, ambient, minimal, quiet, whisper',
+                'Ballad': 'aggressive, fast, noise, screaming, heavy bass',
+                'EDM': 'acoustic, unplugged, slow, folk, classical',
+                'Jazz': 'electronic, autotune, distortion, heavy bass, screaming',
+                'Classical': 'electronic, autotune, rap, bass drop, trap',
+                'Lo-fi': 'aggressive, loud, screaming, metal, fast',
+                'Indie': 'overproduced, autotune, mainstream, generic',
+                'Folk': 'electronic, synthesizer, autotune, bass drop, dubstep',
+                'Metal': 'soft, gentle, quiet, lo-fi, ambient, whisper',
+                'Trot': 'heavy metal, rap, EDM, dubstep, noise',
+                'Pop': 'noise, dissonant, harsh, atonal, experimental',
+                'Latin': 'heavy metal, noise, atonal, monotone',
+                'Country': 'electronic, synthesizer, autotune, dubstep, industrial',
+                'Reggae': 'heavy metal, classical, opera, noise'
+            };
+            return negMap[genre] || 'noise, dissonant, low quality, distorted, off-key';
+        }
+
+        function copyText(elementId, btn) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = '복사됨!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '복사';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
