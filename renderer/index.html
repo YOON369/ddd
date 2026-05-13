@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';"
+    />
+    <title>Claude Code Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="title">
+        <span class="dot"></span>
+        <h1>Claude Code Dashboard</h1>
+      </div>
+      <div class="controls">
+        <label class="auto">
+          <input type="checkbox" id="auto-refresh" checked />
+          <span>자동 새로고침 (3s)</span>
+        </label>
+        <button id="refresh-btn">새로고침</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h2>프로젝트</h2>
+          <ul id="project-list" class="list"></ul>
+        </div>
+        <div class="sidebar-section">
+          <h2>세션</h2>
+          <ul id="session-list" class="list"></ul>
+        </div>
+      </aside>
+
+      <section class="center">
+        <div class="panel-header">
+          <h2 id="session-title">세션을 선택하세요</h2>
+          <div class="stats" id="session-stats"></div>
+        </div>
+        <div id="event-stream" class="event-stream">
+          <p class="muted">왼쪽에서 프로젝트와 세션을 선택하면 활동 타임라인이 표시됩니다.</p>
+        </div>
+      </section>
+
+      <aside class="rightbar">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Git 상태</h2>
+            <button id="pick-dir-btn" class="small">폴더 선택</button>
+          </div>
+          <div id="git-cwd" class="muted small">디렉토리 선택 안 됨</div>
+          <pre id="git-status" class="code"></pre>
+        </div>
+        <div class="panel">
+          <h2>최근 커밋</h2>
+          <pre id="git-log" class="code"></pre>
+        </div>
+      </aside>
+    </main>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
